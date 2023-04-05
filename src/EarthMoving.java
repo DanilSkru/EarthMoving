@@ -38,13 +38,10 @@ class GUIearthMoving extends JFrame{
             public void run() {
                 try {
                     while(true) {
-
                         for (double deg=0; deg<360; deg+=1) {
                             label_earth.setLocation((int) (x0+R*Math.cos(Math.toRadians(deg)))-w_earth/2, (int) (y0+R*Math.sin(Math.toRadians(deg)))-h_earth/2);
                             Thread.sleep(pause_sleep);
                         }
-
-
                     }
                 }
                 catch(Exception e) {
