@@ -28,27 +28,39 @@ class GUIearthMoving extends JFrame{
         add(label_earth);
         add(label_sun);
         setVisible(true);
-        MovingWay(space.getIconWidth()/2, space.getIconHeight()/2, earth.getIconWidth(), earth.getIconHeight());
+        new MovingWay("EarthWay", label_earth, 250, 50, space.getIconWidth()/2, space.getIconHeight()/2, earth.getIconWidth(), earth.getIconHeight()).start();
     }
-    void MovingWay(int x0, int y0, int w_earth, int h_earth) {
-        int R = 250;
-        int pause_sleep = 50;
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while(true) {
-                        for (double deg=0; deg<360; deg+=1) {
-                            label_earth.setLocation((int) (x0+R*Math.cos(Math.toRadians(deg)))-w_earth/2, (int) (y0+R*Math.sin(Math.toRadians(deg)))-h_earth/2);
-                            Thread.sleep(pause_sleep);
-                        }
-                    }
-                }
-                catch(Exception e) {
-                    e.printStackTrace();
+}
+class MovingWay extends Thread {
+    JLabel label;
+    int R;
+    int pause_sleep;
+    int x0;
+    int y0;
+    int w;
+    int h;
+    MovingWay(String name, JLabel label, int R, int pause_sleep, int x0, int y0, int w, int h) {
+        super(name);
+        this.label = label;
+        this.R = R;
+        this.pause_sleep = pause_sleep;
+        this.x0 = x0;
+        this.y0 = y0;
+        this.w = w;
+        this.h = h;
+    }
+    public void run() {
+        try {
+            while(true) {
+                for (double deg=0; deg<360; deg+=1) {
+                    label.setLocation((int) (x0+R*Math.cos(Math.toRadians(deg)))-w/2,
+                                        (int) (y0+R*Math.sin(Math.toRadians(deg)))-h/2);
+                    Thread.sleep(pause_sleep);
                 }
             }
-        });
-        t.start();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }
